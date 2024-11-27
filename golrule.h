@@ -2,7 +2,7 @@
 #define GOLRULE_H
 
 #include <iostream>
-#include "Rule.h"
+#include "rule.h"
 
 class GOLRule : public Rule {
 public:

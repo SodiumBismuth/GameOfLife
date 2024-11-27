@@ -3,8 +3,10 @@
 
 #include <iostream>
 #include <string>
-#include "Grid.h"
-#include "UnitTest.h"
+#include "grid.h"
+#include "unittest.h"
+
+using namespace std;
 
 class Console {
 private:
@@ -15,7 +17,7 @@ public:
     void select_mode()
     void select_path()
     Grid export_grid()
-    UnitTEst export_test()
+    UnitTest export_test()
     void export_all_tests()
 };
 

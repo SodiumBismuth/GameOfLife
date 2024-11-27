@@ -3,7 +3,8 @@
 
 #include <iostream>
 #include <vector>
-#include "Grid.h"
+#include <SFML/Graphics.hpp>
+#include "grid.h"
 
 class GUI{
 private:

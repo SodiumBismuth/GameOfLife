@@ -4,6 +4,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "cell.h"
+
+using namespace std;
 
 class Grid{
 private:
