@@ -9,6 +9,6 @@ using namespace std;
 
 class Rule{
 public:
-    virtual void apply_rule(Cell* cell, vector<Cell*> neighbors)
+    virtual void apply_rule(Cell* cell, vector<Cell*> neighbors);
 };
 #endif
