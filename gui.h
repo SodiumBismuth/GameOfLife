@@ -6,16 +6,31 @@
 #include <SFML/Graphics.hpp>
 #include "grid.h"
 
+using namespace std;
+
 class GUI{
 private:
     Grid* grid;
     sf::RenderWindow window;
     vector<sf::Color> palete;
 public:
-    GUI(Grid* grid) //construteur
+    GUI(Grid* grid) {} //construteur
 
-    void draw()
-
+    void draw(sf::RenderWindow &window) {
+        const int cellSize = 20;
+        int x,y;    
+        window.clear();
+        sf::RectangleShape cell(sf::Vector2f(cellSize - 1.0f, cellSize - 1.0f)); 
+        for (x = 0; x < gridWidth; ++x) { //longueur de la grille
+            for (y = 0; y < gridHeight; ++y) { // hauteur de la grille
+                if (grid[x][y] == 1) {
+                    cell.setPosition(x * cellSize, y * cellSize);
+                    window.draw(cell);
+                }
+            }
+        }
+        window.display();
+    }
 };
 
 #endif
