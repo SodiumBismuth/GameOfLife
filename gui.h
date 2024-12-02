@@ -14,7 +14,7 @@ private:
     sf::RenderWindow window;
     vector<sf::Color> palete;
 public:
-    GUI(Grid* grid) {} //construteur
+    GUI(Grid* grid) : grid(grid) {} //construteur
 
     void draw() {
         const int cellSize = 10;
