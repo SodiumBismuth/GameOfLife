@@ -1,6 +1,7 @@
 #include "console.h"
 
 int main() {
-    Console console();
+    Console console;
+    console.run();
     return 0;
 }

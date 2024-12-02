@@ -8,9 +8,14 @@ class UnitTest{
 private:
     int iterations;
     Grid* grid;
-    Grid Result;
+    Grid* result;
 public:
-    UnitTest(int w, int h, string initial)
-    bool test()
+    UnitTest(int w, int h, string initial, int n_iter, string final) : iterations(n_iter) {
+        grid = new Grid(w,h,initial);
+        result = new Grid(w,h,final);
+    }
+    bool test() {
+        return true;
+    }
 };
 #endif

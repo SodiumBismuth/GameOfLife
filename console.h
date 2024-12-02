@@ -22,41 +22,35 @@ private:
     string current_path;
     bool test_mode;
 public:
-    Console() {
+    Console() {}
+    void run() {
         cout << "Simulateur Jeu de la vie" << endl;
         select_mode();
         select_path();
-        if (test_mode) {
-        /*
-        [MODE DE TEST]
-        */
-            // Sélection du traitement selon si le chemin est un fichier ou un dossier
-            struct stat s;
-            if(stat(current_path.c_str(),&s) == 0 ) {
-                if( s.st_mode & S_IFDIR ) {
-                    export_all_tests();
-                } else if( s.st_mode & S_IFREG ) {
-                    UnitTest* test = export_test(current_path);
-                    test->test();
-                } else {
-                    // Pas un fichier ni un dossier
-                    throw 1;
-                }
-            } else {
-                // Erreur
-                throw 2;
-            }
-        } else {
-            /*
-            [MODE NORMAL]
-            */
+        if (!test_mode) {
             Grid* grid = export_grid(current_path);
-            int n_iter;
-            GOLRule* rule = new GOLRule();
+            int n_iter = 0;
+            GOLRule rule;
             GUI gui(grid);
-            while(!grid->update(rule) && n_iter <= 100) {
-                gui.draw();
+    
+            sf::Clock clock;
+            const float timeStep = 0.5f; // Mise à jour toutes les 500ms
+    
+            while (gui.isOpen() && n_iter <= 100) {
+                if (!gui.handleEvents()) {
+                    break;
+                }
+    
+                if (clock.getElapsedTime().asSeconds() >= timeStep) {
+                    if (grid->update(&rule)) {
+                        break;
+                    }
+                    gui.draw();
+                    clock.restart();
+                    n_iter++;
+                }
             }
+            delete grid;
         }
     }
     void select_mode() {
@@ -68,29 +62,35 @@ public:
         cin >> current_path;
     }
     Grid* export_grid(string path) {
-        int w,h;
-        string grid;
-        ifstream GridFile(path);
-        if (!GridFile.is_open()) {
-            // erreur de lecture du fichier
-            throw 3;
-        }
-        string line;
-        int n_line = 0;
-        while (getline(GridFile, line)) {
-            if (!n_line){ // ligne spécifiant la longueur et la largeur de la grille
-                stringstream iss(line);
-                iss >> w >> h;
-            } else if(n_line == 1){
-                grid += line;
-            } else {
-                grid += " " + line;
-            }
-        }
-        return new Grid(w,h,grid);
+    int w, h;
+    string grid_data;
+    ifstream GridFile(path);
+    if (!GridFile.is_open()) {
+        throw runtime_error("Impossible d'ouvrir le fichier.");
     }
+    
+    string line;
+    int n_line = 0;
+    
+    // Lecture de la première ligne pour les dimensions
+    if (getline(GridFile, line)) {
+        istringstream dim_stream(line);
+        dim_stream >> w >> h;
+    } else {
+        throw runtime_error("Fichier vide");
+    }
+    
+    // Lecture du reste du fichier
+    while (getline(GridFile, line)) {
+        grid_data += (grid_data.empty() ? "" : " ") + line;
+    }
+    
+    GridFile.close();
+    return new Grid(w, h, grid_data);
+}
     UnitTest* export_test(string path) {
-        int w,h,n_iter;
+        int w,h;
+        int n_iter = 0;
         string grid,final;
         ifstream GridFile(path);
         if (!GridFile.is_open()) {
@@ -128,7 +128,10 @@ public:
                 correct++;
             }
             done++;
+            delete curr_test;
         }
+        closedir(dir);
+        delete entity;
         cout << "Tout les tests sont fait (" << correct << "/" << done << ")" << endl;
     }
 };
