@@ -16,14 +16,14 @@ private:
 public:
     GUI(Grid* grid) {} //construteur
 
-    void draw(sf::RenderWindow &window) {
-        const int cellSize = 20;
+    void draw() {
+        const int cellSize = 10;
         int x,y;    
         window.clear();
         sf::RectangleShape cell(sf::Vector2f(cellSize - 1.0f, cellSize - 1.0f)); 
-        for (x = 0; x < gridWidth; ++x) { //longueur de la grille
-            for (y = 0; y < gridHeight; ++y) { // hauteur de la grille
-                if (grid[x][y] == 1) {
+        for (x = 0; x < grid->get_w(); ++x) { //longueur de la grille
+            for (y = 0; y < grid->get_h(); ++y) { // hauteur de la grille
+                if (grid->get_grid()[x][y].get_state() == 1) {
                     cell.setPosition(x * cellSize, y * cellSize);
                     window.draw(cell);
                 }
