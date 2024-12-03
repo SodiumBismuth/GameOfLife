@@ -1,21 +1,17 @@
 #ifndef UNITTEST_H
 #define UNITTEST_H
 
-#include <iostream>
-#include <string>
+#include "grid.h"
 
-class UnitTest{
+class UnitTest {
 private:
     int iterations;
-    Grid* grid;
-    Grid* result;
+    Grid grid;
+    Grid result;
+
 public:
-    UnitTest(int w, int h, string initial, int n_iter, string final) : iterations(n_iter) {
-        grid = new Grid(w,h,initial);
-        result = new Grid(w,h,final);
-    }
-    bool test() {
-        return true;
-    }
+    UnitTest(int w, int h, const std::string& initial);
+    bool test();
 };
+
 #endif

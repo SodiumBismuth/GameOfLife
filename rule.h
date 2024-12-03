@@ -1,15 +1,12 @@
 #ifndef RULE_H
 #define RULE_H
 
-#include <iostream>
-#include <vector>
 #include "cell.h"
+#include <vector>
 
-using namespace std;
-
-class Rule{
+class Rule {
 public:
-    virtual ~Rule() {}
-    virtual void apply_rule(Cell& cell, vector<Cell> neighbors) = 0;
+    virtual void apply_rule(Cell* cell, std::vector<Cell*> neighbors) = 0;
 };
+
 #endif
