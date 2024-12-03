@@ -17,8 +17,11 @@ public:
     Grid(int width, int height, const string& folder_name);
     void update(Rule* rule);
     vector<vector<Cell>>& get_grid();
-    void load_from_file(const string& path);
-    void save_to_file(int iteration);
-    string grid_signature() const;
+    const vector<vector<Cell>>& get_grid() const;
+    void load_file(const string& path);
+    void save_file(int iteration);
+    string grid_arret() const;
+    void show_grid();
+    bool operator==(const Grid& other) const;
 };
 #endif

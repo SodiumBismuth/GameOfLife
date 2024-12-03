@@ -10,8 +10,8 @@ private:
     Grid result;
 
 public:
-    UnitTest(int w, int h, const std::string& initial);
-    bool test();
+    UnitTest(int w, int h, const std::string& initial, const std::string& result, int iterations);
+    bool test(Rule* rule);
 };
 
 #endif

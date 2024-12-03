@@ -3,11 +3,15 @@
 #include "unittest.h"
 using namespace std;
 
-    UnitTest::UnitTest(int w, int h, const string& initial) : iterations(0), grid(w, h, "output_grids"), result(w, h, "output_grids") {
-        grid.load_from_file(initial);
+    UnitTest::UnitTest(int w, int h, const string& initial, const string& final, int iterations) : iterations(iterations), grid(w, h, "output_grids"), result(w, h, "output_grids") {
+        grid.load_file(initial);
+        result.load_file(final);
     }
 
-    bool UnitTest::test() {
-        // Implémentation simplifiée
-        return true;
+    bool UnitTest::test(Rule* rule) {
+        int i;
+        for(i=0;i!=iterations-1;++i){
+            grid.update(rule);
+        }
+        return grid == result;
     }

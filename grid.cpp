@@ -44,7 +44,11 @@ vector<vector<Cell>>& Grid::get_grid() {
     return grid;
 }
 
-void Grid::load_from_file(const string& path) {
+const vector<vector<Cell>>& Grid::get_grid() const {
+    return grid;
+}
+
+void Grid::load_file(const string& path) {
     ifstream file(path);
     if (!file.is_open()) {
         throw runtime_error("Unable to open file.");
@@ -62,7 +66,7 @@ void Grid::load_from_file(const string& path) {
     file.close();
 }
 
-void Grid::save_to_file(int iteration) {
+void Grid::save_file(int iteration) {
     ostringstream filename;
     filename << output_folder << "/Iteration_" << iteration + 1 << ".txt";
 
@@ -83,13 +87,35 @@ void Grid::save_to_file(int iteration) {
     cout << "Grille sauvegardée dans : " << filename.str() << endl;
 }
 
-string Grid::grid_signature() const {
-    ostringstream signature;
+string Grid::grid_arret() const {
+    ostringstream arret;
     for (const auto& row : grid) {
         for (const auto& cell : row) {
-            signature << cell.get_state();
+            arret << cell.get_state();
         }
-        signature << "|";
+        arret << "|";
     }
-    return signature.str();
+    return arret.str();
+}
+
+void Grid::show_grid() {
+    string line;
+    for (const auto& row : grid) {
+        line = "";
+        for (const auto& cell : row) {
+            line += (cell.get_state() == 1 ? "O " : ". ");
+        }
+        cout << line << endl;
+    }
+}
+bool Grid::operator==(const Grid& other) const {
+    const vector<vector<Cell>>& other_grid = other.get_grid();
+    for (int i=0;i<h;++i) {
+        for (int j=0;j<w;++j) {
+            if (grid[i][j].get_state() != other_grid[i][j].get_state()){
+                return false;
+            }
+        }
+    }
+    return true;
 }
