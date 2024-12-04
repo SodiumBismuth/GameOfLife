@@ -1,9 +1,9 @@
 #include "gui.h"
 
-GUI::GUI(Grid* g) : grid(g), window(sf::VideoMode(800, 600), "Jeu de la Vie"), palette({sf::Color::Black, sf::Color::Green, sf::Color::Red}) {} //Parametre de la fenetre
+GUI::GUI(Grid* g) : grid(g), window(sf::VideoMode(800, 800), "Jeu de la Vie"), palette({sf::Color(128,128,128), sf::Color::White, sf::Color(192,20,20)}) {} //Parametre de la fenetre
 
 void GUI::draw() {
-    const int cell_size = 20;
+    const int cell_size = 10;
     window.clear();//renitialisation de la grille
     auto& cells = grid->get_grid();
     for (int i = 0; i < cells.size(); ++i) {//longueur de la grille

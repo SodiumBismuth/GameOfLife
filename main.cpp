@@ -9,6 +9,7 @@
 using namespace std; 
 
 int main(int argc, char* argv[]) {
+    srand (time(NULL));
     Console console;
     console.select_mode();
     console.select_path();

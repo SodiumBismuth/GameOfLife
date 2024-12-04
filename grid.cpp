@@ -3,6 +3,7 @@
 #include <sstream>
 #include <filesystem>
 #include <iostream>
+#include <stdlib.h>
 using namespace std;
 
 namespace fs = filesystem;
@@ -55,21 +56,32 @@ const vector<vector<Cell>>& Grid::get_grid() const {
 }
 
 void Grid::load_file(const string& path) {//Ouvre le fichier choisi
-    ifstream file(path);
-    if (!file.is_open()) {
-        throw runtime_error("Unable to open file.");
-    }
-
-    file >> h >> w;
-    grid = vector<vector<Cell>>(h, vector<Cell>(w));
-    for (int i = 0; i < h; ++i) {//lecture de la grille
-        for (int j = 0; j < w; ++j) {
-            int state;
-            file >> state;
-            grid[i][j].set_state(state);
+    if (path =="random"){
+        h = 100, w = 100;
+        grid = vector<vector<Cell>>(h, vector<Cell>(w));
+        for (int i = 0; i < h; ++i) {//lecture de la grille
+            for (int j = 0; j < w; ++j) {
+                int state = rand()%3;
+                grid[i][j].set_state(state);
+            }
         }
+    } else {
+        ifstream file(path);
+        if (!file.is_open()) {
+            throw runtime_error("Unable to open file.");
+        }
+
+        file >> h >> w;
+        grid = vector<vector<Cell>>(h, vector<Cell>(w));
+        for (int i = 0; i < h; ++i) {//lecture de la grille
+            for (int j = 0; j < w; ++j) {
+                int state;
+                file >> state;
+                grid[i][j].set_state(state);
+            }
+        }
+        file.close();
     }
-    file.close();
 }
 
 void Grid::save_file(int iteration) {//Enregistre les itérations dans des fichiers.txt
