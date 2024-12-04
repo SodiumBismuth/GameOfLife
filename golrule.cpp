@@ -12,7 +12,7 @@ void GOLRule::apply_rule(Cell* cell, std::vector<Cell*> neighbors) {
         if (alive_count < 2 || alive_count > 3) {
             cell->set_state(0); // La cellule meurt
         }
-    } else {
+    } else if (cell->get_state() == 0) {
         if (alive_count == 3) {
             cell->set_state(1); // La cellule devient vivante
         }
