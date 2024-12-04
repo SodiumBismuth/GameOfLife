@@ -1,8 +1,8 @@
 #include "golrule.h"
 
 void GOLRule::apply_rule(Cell* cell, std::vector<Cell*> neighbors) {
-    int alive_count = 0;
-    for (auto neighbor : neighbors) {
+    int alive_count = 0; //Nombre de voisin vivant
+    for (auto neighbor : neighbors) {// auto : détecte le type
         if (neighbor->get_state() == 1) {
             ++alive_count;
         }
