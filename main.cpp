@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
                 }
 
                 string arret = grid.grid_arret(); //Arrete le programme si repetition 
-                if (previous_grid[arret] == 4) {
+                if (previous_grid[arret] == 10) {
                     cout << "Condition d'arrêt : cycle détecté." << endl;
                     break;
                 }
