@@ -22,7 +22,7 @@ void Console::select_path() { //Demande le chemin du fichier
     }
 
 Grid Console::export_grid() { //Transforme un fichier en objet grille
-        Grid grid(0, 0, "output_grids");
+        Grid grid(0, 0, current_path.substr(0, current_path.length() - 4)+"_out");
         grid.load_file(current_path);
         return grid;
     }
